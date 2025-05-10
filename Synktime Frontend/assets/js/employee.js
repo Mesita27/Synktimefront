@@ -1,79 +1,104 @@
-// Abrir modal de registro de empleado
-document.getElementById('btnAddEmployee').addEventListener('click', function() {
-    document.getElementById('modalTitle').textContent = "Registrar Empleado";
-    document.getElementById('employeeForm').reset();
-    document.getElementById('employeeModal').classList.add('show');
-});
-
-// Cerrar modal registro/edición
-function closeEmployeeModal() {
-    document.getElementById('employeeModal').classList.remove('show');
-}
-
-// Abrir modal de edición (simulado para demo)
-window.openEditEmployee = function(btn) {
-    const row = btn.closest('tr');
-    const cells = row.querySelectorAll('td');
-
-    // Ajusta los índices según el orden de tus columnas
-    // [0] Código, [1] Identificación, [2] Nombre, [3] Email, [4] Departamento, [5] Sede, [6] Fecha contratación, [7] Estado
-
-    // Separar nombre completo en nombre y apellido (asumiendo que tu columna Nombre tiene ambos)
-    let nombreCompleto = cells[2].textContent.trim().split(' ');
-    let nombre = nombreCompleto.slice(0, -1).join(' ') || '';
-    let apellido = nombreCompleto.slice(-1).join(' ') || '';
-
-    document.getElementById('modalTitle').textContent = "Editar Empleado";
-    document.getElementById('codigo').value = cells[0].textContent.trim();
-    document.getElementById('nombre').value = nombre;
-    document.getElementById('apellido').value = apellido;
-    document.getElementById('email').value = cells[3].textContent.trim();
-    document.getElementById('departamento').value = cells[4].textContent.trim();
-    document.getElementById('sede').value = cells[5].textContent.trim();
-    document.getElementById('fecha_contratacion').value = cells[6].textContent.trim();
-
-    // Para el estado, busca el texto dentro del span
-    const estadoTexto = cells[7].textContent.trim().toLowerCase();
-    if (estadoTexto === "activo") {
-        document.getElementById('estado').value = "1";
-    } else {
-        document.getElementById('estado').value = "0";
+// Datos simulados de empleados
+const employees = [
+    {
+        codigo: "EMP0101",
+        identificacion: "CC123456",
+        nombre: "Juan",
+        apellido: "Pérez",
+        email: "juan.perez@email.com",
+        departamento: "Recursos Humanos",
+        sede: "Sede Central",
+        fecha_contratacion: "2021-08-01",
+        estado: "Activo"
+    },
+    {
+        codigo: "EMP0102",
+        identificacion: "CC987654",
+        nombre: "María",
+        apellido: "García",
+        email: "maria.garcia@email.com",
+        departamento: "TI",
+        sede: "Sede Norte",
+        fecha_contratacion: "2022-02-15",
+        estado: "Inactivo"
+    },
+    {
+        codigo: "EMP0103",
+        identificacion: "CC112233",
+        nombre: "Carlos",
+        apellido: "López",
+        email: "carlos.lopez@email.com",
+        departamento: "Administración",
+        sede: "Sede Central",
+        fecha_contratacion: "2020-11-10",
+        estado: "Activo"
     }
-    
-    // Abre el modal
-    document.getElementById('employeeModal').classList.add('show');
-};
+    // Puedes agregar más empleados si lo deseas
+];
 
-// Abrir modal de eliminación
-window.openDeleteEmployee = function(btn) {
-    document.getElementById('deleteEmployeeModal').classList.add('show');
-};
-// Cerrar modal eliminación
-function closeDeleteEmployeeModal() {
-    document.getElementById('deleteEmployeeModal').classList.remove('show');
+// Renderizar la tabla de empleados
+function renderEmployeeTable(data) {
+    const tbody = document.getElementById('employeeTableBody');
+    tbody.innerHTML = '';
+    if (data.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;">No se encontraron empleados</td></tr>';
+        return;
+    }
+    data.forEach((emp) => {
+        tbody.innerHTML += `
+            <tr>
+                <td>${emp.codigo}</td>
+                <td>${emp.identificacion}</td>
+                <td>${emp.nombre} ${emp.apellido}</td>
+                <td>${emp.email}</td>
+                <td>${emp.departamento}</td>
+                <td>${emp.sede}</td>
+                <td>${emp.fecha_contratacion}</td>
+                <td><span class="${emp.estado === 'Activo' ? 'status-active' : 'status-inactive'}">${emp.estado}</span></td>
+                <td>
+                    <button class="btn-icon btn-edit" title="Editar" onclick="openEditEmployee(this)"><i class="fas fa-edit"></i></button>
+                    <button class="btn-icon btn-delete" title="Eliminar" onclick="openDeleteEmployee(this)"><i class="fas fa-trash"></i></button>
+                </td>
+            </tr>
+        `;
+    });
 }
 
-// Cerrar modales al hacer click fuera del contenido
-document.addEventListener('click', function(e) {
-    document.querySelectorAll('.modal.show').forEach(modal => {
-        if (e.target === modal) modal.classList.remove('show');
-    });
+// Llenar la tabla al cargar la página
+document.addEventListener('DOMContentLoaded', function() {
+    renderEmployeeTable(employees);
 });
 
-// Exportar a XLS (sólo botón por ahora)
-document.getElementById('btnExportXLS').addEventListener('click', function() {
-    alert("Funcionalidad de exportar a .xls próximamente.");
-});
-
-// Guardar empleado (demo)
-document.getElementById('employeeForm').addEventListener('submit', function(e) {
+// Filtrado por los campos de búsqueda
+document.getElementById('employeeQueryForm').addEventListener('submit', function(e) {
     e.preventDefault();
-    closeEmployeeModal();
-    alert('Empleado guardado (demo, sin backend)');
+    const codigo = document.getElementById('q_codigo').value.trim().toLowerCase();
+    const identificacion = document.getElementById('q_identificacion').value.trim().toLowerCase();
+    const nombre = document.getElementById('q_nombre').value.trim().toLowerCase();
+    const departamento = document.getElementById('q_departamento').value.trim().toLowerCase();
+    const sede = document.getElementById('q_sede').value.trim().toLowerCase();
+
+    const filtered = employees.filter(emp =>
+        (codigo === '' || emp.codigo.toLowerCase().includes(codigo)) &&
+        (identificacion === '' || emp.identificacion.toLowerCase().includes(identificacion)) &&
+        (nombre === '' || (`${emp.nombre} ${emp.apellido}`.toLowerCase().includes(nombre))) &&
+        (departamento === '' || emp.departamento.toLowerCase().includes(departamento)) &&
+        (sede === '' || emp.sede.toLowerCase().includes(sede))
+    );
+    renderEmployeeTable(filtered);
 });
 
-// Eliminar empleado (demo)
-document.getElementById('confirmDeleteEmployeeBtn').addEventListener('click', function() {
-    closeDeleteEmployeeModal();
-    alert('Empleado eliminado (demo, sin backend)');
+// Limpiar el formulario y reiniciar la tabla al hacer click en limpiar
+document.querySelector('#employeeQueryForm .btn-secondary').addEventListener('click', function(e) {
+    e.preventDefault();
+    document.getElementById('employeeQueryForm').reset();
+    renderEmployeeTable(employees);
 });
+
+// Opcionales: funciones demo para editar/eliminar empleados
+window.openEditEmployee = function(btn) {
+    alert("Funcionalidad de editar empleado (demo)");
+};
+window.openDeleteEmployee = function(btn) {
+    alert("Funcionalidad de eliminar empleado (demo)");
+};

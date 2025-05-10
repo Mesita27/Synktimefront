@@ -66,3 +66,22 @@ body {
     background: var(--primary-lighter);
     color: var(--primary);
 }
+/* ...otros estilos globales... */
+
+.btn-main {
+    background: #2B7DE9;
+    color: #fff;
+    border: none;
+    border-radius: 7px;
+    padding: 0.52em 1.3em;
+    font-size: 1em;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    transition: background 0.2s;
+}
+.btn-main:hover, .btn-main:focus {
+    background: #205bb5;
+}

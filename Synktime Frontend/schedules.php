@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Empleados | SynkTime</title>
+    <title>Horarios | SynkTime</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -10,7 +10,7 @@
     <!-- Dashboard Styles -->
     <link rel="stylesheet" href="assets/css/main.css">
     <link rel="stylesheet" href="assets/css/layout.css">
-    <link rel="stylesheet" href="assets/css/employee.css">
+    <link rel="stylesheet" href="assets/css/schedule.css">
 </head>
 <body>
 <div class="app-container">
@@ -18,27 +18,19 @@
     <div class="main-wrapper">
         <?php include 'components/header.php'; ?>
         <main class="main-content">
-            <div class="employee-header">
-                <h2 class="page-title"><i class="fas fa-users"></i> Empleados</h2>
-                <div class="employee-actions">
-                    <button class="btn-primary" id="btnAddEmployee"><i class="fas fa-user-plus"></i> Registrar empleado</button>
+            <div class="schedule-header">
+                <h2 class="page-title"><i class="fas fa-clock"></i> Horarios</h2>
+                <div class="schedule-actions">
+                    <button class="btn-primary" id="btnAddSchedule"><i class="fas fa-plus"></i> Registrar horario</button>
                     <button class="btn-secondary" id="btnExportXLS"><i class="fas fa-file-excel"></i> Exportar .xls</button>
                 </div>
             </div>
-            <div class="employee-table-container">
-                <form id="employeeQueryForm" class="employee-query-form" autocomplete="off" style="margin-bottom: 1.5rem;">
+            <div class="schedule-table-container">
+                <form id="scheduleQueryForm" class="schedule-query-form" autocomplete="off" style="margin-bottom: 1.5rem;">
                     <div class="query-row">
                         <div class="form-group">
-                            <label for="q_codigo">Código</label>
-                            <input type="text" id="q_codigo" name="codigo" placeholder="Código">
-                        </div>
-                        <div class="form-group">
-                            <label for="q_identificacion">Identificación</label>
-                            <input type="text" id="q_identificacion" name="identificacion" placeholder="Identificación">
-                        </div>
-                        <div class="form-group">
-                            <label for="q_nombre">Nombre</label>
-                            <input type="text" id="q_nombre" name="nombre" placeholder="Nombre o Apellido">
+                            <label for="q_empleado">Empleado</label>
+                            <input type="text" id="q_empleado" name="empleado" placeholder="Nombre o Apellido">
                         </div>
                         <div class="form-group">
                             <label for="q_departamento">Departamento</label>
@@ -48,35 +40,46 @@
                             <label for="q_sede">Sede</label>
                             <input type="text" id="q_sede" name="sede" placeholder="Sede">
                         </div>
+                        <div class="form-group">
+                            <label for="q_dia">Día</label>
+                            <select id="q_dia" name="dia">
+                                <option value="">Todos</option>
+                                <option value="Lunes">Lunes</option>
+                                <option value="Martes">Martes</option>
+                                <option value="Miércoles">Miércoles</option>
+                                <option value="Jueves">Jueves</option>
+                                <option value="Viernes">Viernes</option>
+                                <option value="Sábado">Sábado</option>
+                                <option value="Domingo">Domingo</option>
+                            </select>
+                        </div>
                         <div class="form-group query-btns">
                             <button type="submit" class="btn-primary"><i class="fas fa-search"></i> Consultar</button>
                             <button type="button" class="btn-secondary"><i class="fas fa-redo"></i> Limpiar</button>
                         </div>
                     </div>
                 </form>
-                <table class="employee-table">
+                <table class="schedule-table">
                     <thead>
                         <tr>
-                            <th>Código</th>
-                            <th>Identificación</th>
-                            <th>Nombre</th>
-                            <th>Email</th>
+                            <th>Empleado</th>
                             <th>Departamento</th>
                             <th>Sede</th>
-                            <th>Fecha contratación</th>
-                            <th>Estado</th>
+                            <th>Día</th>
+                            <th>Hora entrada</th>
+                            <th>Hora salida</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
-                    <tbody id="employeeTableBody">
-                        <!-- Las filas de empleados se insertan dinámicamente con JS -->
+                    <tbody id="scheduleTableBody">
+                        <!-- Las filas de horarios se insertan dinámicamente con JS -->
                     </tbody>
                 </table>
             </div>
-            <?php include 'components/employee_modals.php'; ?>
+            <?php include 'components/schedule_modals.php'; ?>
         </main>
     </div>
 </div>
-<script src="assets/js/employee.js"></script>
+<script src="assets/js/schedule.js"></script>
 </body>
 </html>
