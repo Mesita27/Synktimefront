@@ -1,0 +1,44 @@
+# SynkTime - System Architecture
+
+## Overview
+SynkTime is a comprehensive attendance management system with a hierarchical structure:
+- Empresas (Companies) → Negocios (Businesses) → Sedes (Locations) → Trabajadores (Employees)
+
+## Directory Structure
+```
+synktime/
+├── assets/
+│   ├── css/
+│   ├── js/
+│   └── img/
+├── components/
+│   ├── header.php 
+│   ├── sidebar.php 
+├── modules/
+│   ├── empleados/
+│   │   ├── index.php 
+│   │   ├── crear.php
+│   │   ├── editar.php
+│   │   ├── eliminar.php
+│   │   └── consultar.php
+│   ├── asistencias/
+│   │   ├── index.php
+│   │   ├── consultar.php
+│   │   └── justificar.php
+│   ├── horarios/
+│   │   ├── index.php
+│   │   ├── crear.php
+│   │   ├── editar.php
+│   │   ├── eliminar.php
+│   │   └── asignar.php
+│   └── reportes/
+│       ├── index.php
+│       ├── diario.php
+│       ├── semanal.php
+│       └── mensual.php
+├── dashboard.php
+├── login.php 
+├── employees.php 
+├── attendace.php 
+├── schedules.php
+└── reports.php
