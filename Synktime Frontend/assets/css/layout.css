@@ -149,6 +149,15 @@
     color: var(--primary);
 }
 
+.nav-link.active {
+    background: var(--primary-lighter, #f0f6fe);
+    color: var(--primary, #2B7DE9);
+    font-weight: 600;
+}
+.nav-link.active i {
+    color: var(--primary, #2B7DE9);
+}
+
 /* Header principal */
 .header {
     position: sticky;

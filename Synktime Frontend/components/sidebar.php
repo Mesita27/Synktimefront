@@ -11,7 +11,7 @@
             <div class="nav-section-title">Principal</div>
             <ul class="nav-items">
                 <li class="nav-item">
-                    <a href="dashboard.php" class="nav-link active">
+                    <a href="dashboard.php" class="nav-link<?php if(basename($_SERVER['PHP_SELF']) == 'dashboard.php') echo ' active'; ?>">
                         <i class="fas fa-chart-line"></i>
                         <span>Dashboard</span>
                     </a>
@@ -23,25 +23,25 @@
             <div class="nav-section-title">Gestión</div>
             <ul class="nav-items">
                 <li class="nav-item">
-                    <a href="employees.php" class="nav-link">
+                    <a href="employee.php" class="nav-link<?php if(basename($_SERVER['PHP_SELF']) == 'employee.php') echo ' active'; ?>">
                         <i class="fas fa-users"></i>
                         <span>Empleados</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="attendance.php" class="nav-link">
+                    <a href="attendance.php" class="nav-link<?php if(basename($_SERVER['PHP_SELF']) == 'attendance.php') echo ' active'; ?>">
                         <i class="fas fa-clock"></i>
                         <span>Asistencias</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="schedules.php" class="nav-link">
+                    <a href="schedules.php" class="nav-link<?php if(basename($_SERVER['PHP_SELF']) == 'schedules.php') echo ' active'; ?>">
                         <i class="fas fa-calendar-alt"></i>
                         <span>Horarios</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="reports.php" class="nav-link">
+                    <a href="reports.php" class="nav-link<?php if(basename($_SERVER['PHP_SELF']) == 'reports.php') echo ' active'; ?>">
                         <i class="fas fa-file-alt"></i>
                         <span>Reportes</span>
                     </a>
