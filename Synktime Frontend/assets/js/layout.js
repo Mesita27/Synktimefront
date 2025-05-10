@@ -80,4 +80,27 @@ class Layout {
 // Inicializar cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', () => {
     new Layout();
+    // Dropdown user menu
+    const userDropdown = document.querySelector('.user-dropdown');
+    const userMenuBtn = document.getElementById('userMenuBtn');
+    const userMenu = document.getElementById('userMenu');
+
+    if (userDropdown && userMenuBtn && userMenu) {
+        userMenuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            userDropdown.classList.toggle('open');
+        });
+
+        // Cerrar el menú al hacer click fuera
+        document.addEventListener('click', (e) => {
+            if (userDropdown.classList.contains('open')) {
+                userDropdown.classList.remove('open');
+            }
+        });
+
+        // Opcional: No cerrar al hacer click dentro del menú
+        userMenu.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+    }
 });
