@@ -85,3 +85,25 @@ body {
 .btn-main:hover, .btn-main:focus {
     background: #205bb5;
 }
+
+.btn-secondary {
+    background: #ffffff;
+    color: #2B7DE9;
+    border: none;
+    border-radius: 7px;
+    padding: 0.52em 1.3em;
+    font-size: 1em;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+}
+.btn-secondary:hover, .btn-secondary:focus {
+    background: #f0f6fe;
+}
+.btn-secondary:disabled {
+    background: #f0f6fe;
+    color: #2B7DE9;
+    cursor: not-allowed;
+}

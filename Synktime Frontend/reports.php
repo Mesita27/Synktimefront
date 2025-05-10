@@ -27,18 +27,18 @@
                     <button type="button" class="btn-primary" id="btnWeek"><i class="fas fa-calendar-week"></i> Semana actual</button>
                     <button type="button" class="btn-primary" id="btnMonth"><i class="fas fa-calendar"></i> Mes actual</button>
                 </div>
-                <form id="customRangeForm" class="custom-range-form">
+                <form id="customRangeForm" class="custom-range-form" autocomplete="off" style="display: flex; align-items: center; gap: 0.5rem;">
                     <label>Rango personalizado:</label>
                     <input type="date" id="customStart" required>
                     <span>a</span>
                     <input type="date" id="customEnd" required>
-                    <button type="submit" class="btn-secondary"><i class="fas fa-search"></i> Consultar</button>
+                    <button type="submit" class="btn-secondary" id="btnConsultar"><i class="fas fa-search"></i> Consultar</button>
+                    <button type="button" class="btn-secondary" id="btnLimpiar"><i class="fas fa-redo"></i> Limpiar</button>
                 </form>
                 <button class="btn-success" id="btnExportXLS"><i class="fas fa-file-excel"></i> Exportar a .xls</button>
-                <button class="btn-warning" id="btnReset"><i class="fas fa-undo"></i> Reiniciar consulta</button>
             </section>
             <div class="reports-table-container">
-                <table class="reports-table">
+                <table id="tablaReportes" class="reports-table">
                     <thead>
                         <tr>
                             <th>Empleado</th>

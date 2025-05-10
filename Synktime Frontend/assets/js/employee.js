@@ -102,3 +102,4 @@ window.openEditEmployee = function(btn) {
 window.openDeleteEmployee = function(btn) {
     alert("Funcionalidad de eliminar empleado (demo)");
 };
+

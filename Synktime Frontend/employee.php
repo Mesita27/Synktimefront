@@ -25,35 +25,8 @@
                     <button class="btn-secondary" id="btnExportXLS"><i class="fas fa-file-excel"></i> Exportar .xls</button>
                 </div>
             </div>
+            <?php include 'components/employee_query.php'; ?>
             <div class="employee-table-container">
-                <form id="employeeQueryForm" class="employee-query-form" autocomplete="off" style="margin-bottom: 1.5rem;">
-                    <div class="query-row">
-                        <div class="form-group">
-                            <label for="q_codigo">Código</label>
-                            <input type="text" id="q_codigo" name="codigo" placeholder="Código">
-                        </div>
-                        <div class="form-group">
-                            <label for="q_identificacion">Identificación</label>
-                            <input type="text" id="q_identificacion" name="identificacion" placeholder="Identificación">
-                        </div>
-                        <div class="form-group">
-                            <label for="q_nombre">Nombre</label>
-                            <input type="text" id="q_nombre" name="nombre" placeholder="Nombre o Apellido">
-                        </div>
-                        <div class="form-group">
-                            <label for="q_departamento">Departamento</label>
-                            <input type="text" id="q_departamento" name="departamento" placeholder="Departamento">
-                        </div>
-                        <div class="form-group">
-                            <label for="q_sede">Sede</label>
-                            <input type="text" id="q_sede" name="sede" placeholder="Sede">
-                        </div>
-                        <div class="form-group query-btns">
-                            <button type="submit" class="btn-primary"><i class="fas fa-search"></i> Consultar</button>
-                            <button type="button" class="btn-secondary"><i class="fas fa-redo"></i> Limpiar</button>
-                        </div>
-                    </div>
-                </form>
                 <table class="employee-table">
                     <thead>
                         <tr>
@@ -68,8 +41,37 @@
                             <th>Acciones</th>
                         </tr>
                     </thead>
-                    <tbody id="employeeTableBody">
-                        <!-- Las filas de empleados se insertan dinámicamente con JS -->
+                    <tbody>
+                        <!-- Ejemplo de fila de empleado -->
+                        <tr>
+                            <td>EMP0101</td>
+                            <td>CC123456</td>
+                            <td>Juan Pérez</td>
+                            <td>juan.perez@email.com</td>
+                            <td>Recursos Humanos</td>
+                            <td>Sede Central</td>
+                            <td>2021-08-01</td>
+                            <td><span class="status-active">Activo</span></td>
+                            <td>
+                                <button class="btn-icon btn-edit" title="Editar" onclick="openEditEmployee(this)"><i class="fas fa-edit"></i></button>
+                                <button class="btn-icon btn-delete" title="Eliminar" onclick="openDeleteEmployee(this)"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>EMP0102</td>
+                            <td>CC987654</td>
+                            <td>María García</td>
+                            <td>maria.garcia@email.com</td>
+                            <td>TI</td>
+                            <td>Sede Norte</td>
+                            <td>2022-02-15</td>
+                            <td><span class="status-inactive">Inactivo</span></td>
+                            <td>
+                                <button class="btn-icon btn-edit" title="Editar" onclick="openEditEmployee(this)"><i class="fas fa-edit"></i></button>
+                                <button class="btn-icon btn-delete" title="Eliminar" onclick="openDeleteEmployee(this)"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        <!-- ...más empleados -->
                     </tbody>
                 </table>
             </div>

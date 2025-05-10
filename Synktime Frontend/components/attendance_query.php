@@ -7,7 +7,7 @@
             </div>
             <div class="form-group query-btns">
                 <button type="submit" class="btn-primary"><i class="fas fa-search"></i> Consultar</button>
-                <button type="button" class="btn-secondary" id="btnClearQuery"><i class="fas fa-redo"></i> Limpiar</button>
+                <button type="submit" class="btn-secondary"><i class="fas fa-redo"></i> Limpiar</a>
             </div>
         </div>
     </form>

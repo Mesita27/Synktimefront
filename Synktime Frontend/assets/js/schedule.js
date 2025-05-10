@@ -130,7 +130,12 @@ document.getElementById('scheduleForm').addEventListener('submit', function(e) {
 window.openDeleteScheduleModal = function(idx) {
     alert('Funcionalidad de eliminar horario (demo)');
 };
-// Exportar a XLS (demo)
+// EXPORTAR A XLS
 document.getElementById('btnExportXLS').addEventListener('click', function() {
-    alert("Funcionalidad de exportar a .xls próximamente.");
+    const table = document.querySelector('.schedule-table');
+    if (!table) return;
+
+    // Convierte la tabla HTML a una hoja de cálculo
+    const wb = XLSX.utils.table_to_book(table, {sheet:"Horarios"});
+    XLSX.writeFile(wb, 'horarios.xlsx');
 });

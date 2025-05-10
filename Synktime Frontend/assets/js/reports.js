@@ -106,75 +106,17 @@ function renderReportsTable(data) {
     });
 }
 
-// Utilidades de fecha
-function getToday() {
-    const now = new Date();
-    return now.toISOString().slice(0, 10);
-}
-function getWeekStartEnd() {
-    const now = new Date();
-    const day = now.getDay() || 7;
-    const monday = new Date(now);
-    monday.setDate(now.getDate() - day + 1);
-    const sunday = new Date(monday);
-    sunday.setDate(monday.getDate() + 6);
-    return [
-        monday.toISOString().slice(0, 10),
-        sunday.toISOString().slice(0, 10)
-    ];
-}
-function getMonthStartEnd() {
-    const now = new Date();
-    const start = new Date(now.getFullYear(), now.getMonth(), 1);
-    const end = new Date(now.getFullYear(), now.getMonth() + 1, 0);
-    return [
-        start.toISOString().slice(0, 10),
-        end.toISOString().slice(0, 10)
-    ];
-}
-
-// Filtros
+// Filtro por rango de fechas
 function filterByDateRange(data, start, end) {
     return data.filter(rep => rep.fecha >= start && rep.fecha <= end);
 }
 
-function resetCustomRangeInputs() {
-    document.getElementById('customStart').value = "";
-    document.getElementById('customEnd').value = "";
-}
-
-function resetReportFiltersAndTable() {
-    resetCustomRangeInputs();
-    renderReportsTable(attendanceReports);
-}
-
-// Inicial: mostrar todos los datos y limpiar el rango personalizado
+// Inicial: mostrar todos los datos
 document.addEventListener('DOMContentLoaded', function() {
-    resetReportFiltersAndTable();
+    renderReportsTable(attendanceReports);
 });
 
-// Botón: Día actual
-document.getElementById('btnToday').addEventListener('click', function() {
-    const today = getToday();
-    renderReportsTable(filterByDateRange(attendanceReports, today, today));
-    resetCustomRangeInputs();
-});
-
-// Botón: Semana actual
-document.getElementById('btnWeek').addEventListener('click', function() {
-    const [start, end] = getWeekStartEnd();
-    renderReportsTable(filterByDateRange(attendanceReports, start, end));
-    resetCustomRangeInputs();
-});
-
-// Botón: Mes actual
-document.getElementById('btnMonth').addEventListener('click', function() {
-    const [start, end] = getMonthStartEnd();
-    renderReportsTable(filterByDateRange(attendanceReports, start, end));
-    resetCustomRangeInputs();
-});
-
-// Formulario: Rango personalizado
+// Consultar por rango personalizado
 document.getElementById('customRangeForm').addEventListener('submit', function(e) {
     e.preventDefault();
     const start = document.getElementById('customStart').value;
@@ -190,28 +132,67 @@ document.getElementById('customRangeForm').addEventListener('submit', function(e
     renderReportsTable(filterByDateRange(attendanceReports, start, end));
 });
 
-// Descargar .xls
+// Limpiar filtro y mostrar todo
+document.getElementById('btnLimpiar').addEventListener('click', function() {
+    document.getElementById('customRangeForm').reset();
+    renderReportsTable(attendanceReports);
+});
+
+// Exportar XLS
 document.getElementById('btnExportXLS').addEventListener('click', function() {
-    const rows = Array.from(document.querySelectorAll('#reportsTableBody tr'));
-    if (rows.length === 0 || rows[0].children[0].colSpan === 8) {
+    const table = document.getElementById('tablaReportes');
+    if (!table) {
         alert("No hay datos para exportar.");
         return;
     }
-    const data = [
-        ["Empleado", "Departamento", "Sede", "Fecha", "Hora entrada", "Hora salida", "Estado entrada", "Dispositivo"]
-    ];
-    rows.forEach(row => {
-        const cells = row.querySelectorAll('td');
-        data.push(Array.from(cells).map(cell => cell.textContent));
-    });
-
-    const ws = XLSX.utils.aoa_to_sheet(data);
+    const ws = XLSX.utils.table_to_sheet(table);
     const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "ReporteAsistencia");
-    XLSX.writeFile(wb, "reporte_asistencia.xlsx");
+    XLSX.utils.book_append_sheet(wb, ws, "Reportes");
+    XLSX.writeFile(wb, "reportes.xlsx");
+});
+// === FILTROS RÁPIDOS DE ASISTENCIA ===
+
+// Día actual
+document.getElementById('btnToday').addEventListener('click', function() {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = (today.getMonth() + 1).toString().padStart(2, '0');
+    const dd = today.getDate().toString().padStart(2, '0');
+    const current = `${yyyy}-${mm}-${dd}`;
+    const filtrados = attendanceReports.filter(rep => rep.fecha === current);
+    renderReportsTable(filtrados);
 });
 
-// Botón: Reiniciar consulta
-document.getElementById('btnReset').addEventListener('click', function() {
-    resetReportFiltersAndTable();
+// Semana actual
+document.getElementById('btnWeek').addEventListener('click', function() {
+    const today = new Date();
+    // Obtener el primer día de la semana (lunes)
+    const dayOfWeek = today.getDay() || 7;
+    const monday = new Date(today);
+    monday.setDate(today.getDate() - dayOfWeek + 1);
+    const yyyy = monday.getFullYear();
+    const mm = (monday.getMonth() + 1).toString().padStart(2, '0');
+    const dd = monday.getDate().toString().padStart(2, '0');
+    const startOfWeek = `${yyyy}-${mm}-${dd}`;
+    // Último día de la semana (domingo)
+    const sunday = new Date(monday);
+    sunday.setDate(monday.getDate() + 6);
+    const yyyy2 = sunday.getFullYear();
+    const mm2 = (sunday.getMonth() + 1).toString().padStart(2, '0');
+    const dd2 = sunday.getDate().toString().padStart(2, '0');
+    const endOfWeek = `${yyyy2}-${mm2}-${dd2}`;
+    renderReportsTable(filterByDateRange(attendanceReports, startOfWeek, endOfWeek));
+});
+
+// Mes actual
+document.getElementById('btnMonth').addEventListener('click', function() {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = (today.getMonth() + 1).toString().padStart(2, '0');
+    // Primer día del mes
+    const start = `${yyyy}-${mm}-01`;
+    // Último día del mes
+    const lastDay = new Date(yyyy, today.getMonth() + 1, 0).getDate();
+    const end = `${yyyy}-${mm}-${lastDay.toString().padStart(2, '0')}`;
+    renderReportsTable(filterByDateRange(attendanceReports, start, end));
 });
