@@ -1,5 +1,5 @@
-// Datos simulados de horarios vinculados a empleados
-const schedules = [
+// Simulación de datos de horarios
+let schedules = [
     {
         empleado: "Juan Pérez",
         departamento: "Recursos Humanos",
@@ -123,19 +123,52 @@ document.addEventListener('mousedown', function(e) {
 // Guardar horario (demo)
 document.getElementById('scheduleForm').addEventListener('submit', function(e) {
     e.preventDefault();
+    const form = e.target;
+    const horario = {
+        empleado: form.empleado.value,
+        departamento: form.departamento.value,
+        sede: form.sede.value,
+        dia: form.dia.value,
+        hora_entrada: form.hora_entrada.value,
+        hora_salida: form.hora_salida.value
+    };
+    if (document.getElementById('scheduleModalTitle').textContent === "Registrar Horario") {
+        schedules.push(horario);
+    } else {
+        // Buscar el índice del horario a editar
+        const idx = schedules.findIndex(s => 
+            s.empleado === form.empleado.value &&
+            s.departamento === form.departamento.value &&
+            s.sede === form.sede.value &&
+            s.dia === form.dia.value
+        );
+        if (idx !== -1) schedules[idx] = horario;
+    }
+    renderScheduleTable(schedules);
     closeScheduleModal();
-    alert('Horario guardado (demo, sin backend)');
 });
-// Eliminar horario (demo)
+
+// Confirmación visual para eliminar horario
+let deleteScheduleIdx = null;
 window.openDeleteScheduleModal = function(idx) {
-    alert('Funcionalidad de eliminar horario (demo)');
+    deleteScheduleIdx = idx;
+    document.getElementById('deleteScheduleModal').classList.add('show');
 };
+window.closeDeleteScheduleModal = function() {
+    document.getElementById('deleteScheduleModal').classList.remove('show');
+};
+document.getElementById('confirmDeleteScheduleBtn').addEventListener('click', function() {
+    if (deleteScheduleIdx !== null) {
+        schedules.splice(deleteScheduleIdx, 1);
+        renderScheduleTable(schedules);
+    }
+    closeDeleteScheduleModal();
+});
+
 // EXPORTAR A XLS
 document.getElementById('btnExportXLS').addEventListener('click', function() {
     const table = document.querySelector('.schedule-table');
     if (!table) return;
-
-    // Convierte la tabla HTML a una hoja de cálculo
     const wb = XLSX.utils.table_to_book(table, {sheet:"Horarios"});
     XLSX.writeFile(wb, 'horarios.xlsx');
 });

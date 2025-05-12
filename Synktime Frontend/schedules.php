@@ -82,6 +82,7 @@
 </div>
 <!-- SheetJS para exportar a XLS -->
 <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+<script src="assets/js/layout.js"></script>
 <script src="assets/js/schedule.js"></script>
 </body>
 </html>

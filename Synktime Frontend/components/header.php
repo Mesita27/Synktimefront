@@ -3,7 +3,21 @@
         <button class="toggle-sidebar" id="toggleSidebar">
             <i class="fas fa-bars"></i>
         </button>
-        <h1 class="header-title">Dashboard</h1>
+        <h1 class="header-title">
+            <?php
+                // Detectar título dinámico según el archivo
+                $titles = [
+                    'dashboard.php' => 'Dashboard',
+                    'employees.php' => 'Empleados',
+                    'attendance.php' => 'Asistencias',
+                    'schedules.php' => 'Horarios',
+                    'reports.php' => 'Reportes',
+                    'index.php' => 'Inicio'
+                ];
+                $file = basename($_SERVER['PHP_SELF']);
+                echo isset($titles[$file]) ? $titles[$file] : 'SynkTime';
+            ?>
+        </h1>
     </div>
     <div class="header-right">
         <div class="system-info">
@@ -15,11 +29,13 @@
             <div class="user-dropdown">
                 <button class="user-info" id="userMenuBtn" type="button">
                     <i class="fas fa-user"></i>
-                    <span class="user-name">Mesita27</span>
+                    <span class="user-name">
+                        <?php echo isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : 'Usuario'; ?>
+                    </span>
                     <i class="fas fa-caret-down dropdown-arrow"></i>
                 </button>
                 <div class="user-menu" id="userMenu">
-                    <a href="login.php" class="logout-btn">
+                    <a href="<?php echo (basename(dirname($_SERVER['PHP_SELF'])) !== 'Synktime Frontend') ? '../../logout.php' : 'logout.php'; ?>" class="logout-btn">
                         <i class="fas fa-sign-out-alt"></i>
                         Cerrar sesión
                     </a>

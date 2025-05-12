@@ -48,5 +48,6 @@
     </div>
 </div>
 <script src="assets/js/attendance.js"></script>
+<script src="assets/js/layout.js"></script>
 </body>
 </html>

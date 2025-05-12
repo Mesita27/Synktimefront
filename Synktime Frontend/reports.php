@@ -60,6 +60,7 @@
     </div>
 </div>
 <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+<script src="assets/js/layout.js"></script>
 <script src="assets/js/reports.js"></script>
 </body>
 </html>

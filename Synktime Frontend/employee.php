@@ -41,37 +41,8 @@
                             <th>Acciones</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <!-- Ejemplo de fila de empleado -->
-                        <tr>
-                            <td>EMP0101</td>
-                            <td>CC123456</td>
-                            <td>Juan Pérez</td>
-                            <td>juan.perez@email.com</td>
-                            <td>Recursos Humanos</td>
-                            <td>Sede Central</td>
-                            <td>2021-08-01</td>
-                            <td><span class="status-active">Activo</span></td>
-                            <td>
-                                <button class="btn-icon btn-edit" title="Editar" onclick="openEditEmployee(this)"><i class="fas fa-edit"></i></button>
-                                <button class="btn-icon btn-delete" title="Eliminar" onclick="openDeleteEmployee(this)"><i class="fas fa-trash"></i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>EMP0102</td>
-                            <td>CC987654</td>
-                            <td>María García</td>
-                            <td>maria.garcia@email.com</td>
-                            <td>TI</td>
-                            <td>Sede Norte</td>
-                            <td>2022-02-15</td>
-                            <td><span class="status-inactive">Inactivo</span></td>
-                            <td>
-                                <button class="btn-icon btn-edit" title="Editar" onclick="openEditEmployee(this)"><i class="fas fa-edit"></i></button>
-                                <button class="btn-icon btn-delete" title="Eliminar" onclick="openDeleteEmployee(this)"><i class="fas fa-trash"></i></button>
-                            </td>
-                        </tr>
-                        <!-- ...más empleados -->
+                    <tbody id="employeeTableBody">
+                        <!-- El JS llenará dinámicamente las filas aquí -->
                     </tbody>
                 </table>
             </div>
@@ -79,6 +50,8 @@
         </main>
     </div>
 </div>
+<script src="assets/js/layout.js"></script>
 <script src="assets/js/employee.js"></script>
+<script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
 </body>
 </html>

@@ -44,3 +44,16 @@
         </form>
     </div>
 </div>
+
+<!-- Modal Eliminar Horario -->
+<div class="modal" id="deleteScheduleModal">
+    <div class="modal-content modal-content-sm">
+        <span class="modal-close" onclick="closeDeleteScheduleModal()"><i class="fas fa-times"></i></span>
+        <h3>Eliminar horario</h3>
+        <p>¿Estás seguro de que deseas eliminar este horario?</p>
+        <div class="form-actions">
+            <button class="btn-danger" id="confirmDeleteScheduleBtn">Eliminar</button>
+            <button class="btn-secondary" onclick="closeDeleteScheduleModal()">Cancelar</button>
+        </div>
+    </div>
+</div>
