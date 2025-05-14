@@ -18,7 +18,7 @@ let employees = [
     foto: ""
   }
 ];
-
+window.employees = employees;
 let editingIndex = null;
 let deleteIndex = null;
 

@@ -20,6 +20,10 @@
         <main class="main-content">
             <div class="attendance-header">
                 <h2 class="page-title"><i class="fas fa-calendar-check"></i> Asistencias</h2>
+                <!-- Botón para abrir el modal de registrar asistencia -->
+                <button type="button" class="btn-primary" onclick="openAttendanceRegisterModal()" style="margin-left:1rem;">
+                    <i class="fas fa-plus"></i> Registrar Asistencia
+                </button>
             </div>
             <?php include 'components/attendance_query.php'; ?>
             <div class="attendance-table-container">
@@ -47,6 +51,8 @@
         </main>
     </div>
 </div>
+<!-- IMPORTANTE: primero employee.js, luego attendance.js -->
+<script src="assets/js/employee.js"></script>
 <script src="assets/js/attendance.js"></script>
 <script src="assets/js/layout.js"></script>
 </body>
